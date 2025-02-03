@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактирование профиля</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container profile-container fade-in">
+        <h2>Редактирование профиля</h2>
+        <p>Имя пользователя: <span id="usernameDisplay"></span></p>
+        <input type="file" id="avatar" accept="image/*">
+        <textarea id="description" placeholder="Описание" rows="4"></textarea>
+        <button onclick="saveProfile()">Сохранить</button>
+        <button class="secondary" onclick="startChat()">Перейти в чат</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
