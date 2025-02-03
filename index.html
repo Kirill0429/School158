@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Школа №158</title>
+    <title>Регистрация / Вход</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Добро пожаловать в Школу №158</h1>
-    </header>
-    <main>
-        <section class="main-image">
-            <img src="school-main.jpg" alt="Наша школа" class="main-photo">
-        </section>
-        <section class="menu">
-            <a href="news.html" class="menu-item">Новости</a>
-            <a href="gallery.html" class="menu-item">Галерея</a>
-            <a href="contact.html" class="menu-item">Связаться с нами</a>
-        </section>
-    </main>
+    <div class="container auth-container fade-in">
+        <h2>Регистрация</h2>
+        <input id="username" type="text" placeholder="Введите имя" required>
+        <input id="password" type="password" placeholder="Введите пароль" required>
+        <input id="confirmPassword" type="password" placeholder="Подтвердите пароль" required>
+        <button onclick="register()">Зарегистрироваться</button>
+        <h2>Или</h2>
+        <h2>Вход</h2>
+        <input id="loginUsername" type="text" placeholder="Введите имя для входа" required>
+        <input id="loginPassword" type="password" placeholder="Введите пароль для входа" required>
+        <button onclick="login()">Войти</button>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
