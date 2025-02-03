@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чат</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="chat-container">
+        <div id="messages"></div>
+        <textarea id="message" placeholder="Введите сообщение"></textarea>
+        <button onclick="sendMessage()">Отправить</button>
+        <button onclick="openSettings()">Настройки</button>
+    </div>
+
+    <!-- Модальное окно для настроек -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSettings()">&times;</span>
+            <h2>Настройки</h2>
+            <label for="nickname">Ник:</label>
+            <input type="text" id="nickname" placeholder="Введите ник" value="">
+            <br>
+            <label for="avatar">Аватар (URL):</label>
+            <input type="text" id="avatar" placeholder="Введите URL аватара" value="">
+            <br>
+            <label for="description">Описание:</label>
+            <textarea id="description" placeholder="Введите описание"></textarea>
+            <br>
+            <button onclick="saveSettings()">Сохранить настройки</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
