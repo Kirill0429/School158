@@ -1,16 +1,3 @@
-// Проверка, существует ли уже такой пользователь
-function checkUserExists(username) {
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    return users.some(user => user.username === username);
-}
-
-// Сохранение нового пользователя
-function saveUser(username, password) {
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    users.push({ username, password });
-    localStorage.setItem('users', JSON.stringify(users));
-}
-
 // Регистрация пользователя
 function register() {
     const username = document.getElementById('username').value;
@@ -35,6 +22,19 @@ function register() {
     saveUser(username, password); // Сохраняем нового пользователя
     localStorage.setItem('currentUser', username); // Сохраняем текущего пользователя
     window.location.href = 'profile.html'; // Перенаправляем на страницу редактирования профиля
+}
+
+// Проверка, существует ли уже такой пользователь
+function checkUserExists(username) {
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    return users.some(user => user.username === username);
+}
+
+// Сохранение нового пользователя
+function saveUser(username, password) {
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    users.push({ username, password });
+    localStorage.setItem('users', JSON.stringify(users));
 }
 
 // Вход пользователя
@@ -64,8 +64,8 @@ function getCurrentUser() {
 }
 
 // Если пользователь не авторизован, перенаправляем на страницу входа
-if (!getCurrentUser() && window.location.pathname !== '/32.html') {
-    window.location.href = '32.html'; // Переход на страницу регистрации/входа
+if (!getCurrentUser() && window.location.pathname !== '/index.html' && window.location.pathname !== '/login.html') {
+    window.location.href = 'login.html'; // Переход на страницу входа
 }
 
 // Отображение имени текущего пользователя в профиле
@@ -77,135 +77,87 @@ function showProfile() {
 // Сохранение профиля
 function saveProfile() {
     const description = document.getElementById('description').value;
-    const avatarFile = document.getElementById('avatar').files[0]; // Получаем выбранный файл аватара
+    const avatarFile = document.getElementById('avatar').files[0];
 
     if (avatarFile) {
-        // Загружаем аватар
         const reader = new FileReader();
         reader.onload = function (e) {
-            localStorage.setItem('avatar', e.target.result); // Сохраняем аватар в localStorage
+            localStorage.setItem('avatar', e.target.result);
         };
-        reader.readAsDataURL(avatarFile); // Читаем файл как data URL
+        reader.readAsDataURL(avatarFile);
     }
 
-    localStorage.setItem('description', description); // Сохраняем описание
-    window.location.href = 'chat.html'; // Перенаправляем в чат
+    localStorage.setItem('description', description);
+    window.location.href = 'chat.html';
 }
 
-// Переход в чат
+// Перейти в чат
 function startChat() {
-    window.location.href = 'chat.html'; // Перенаправление в чат
+    window.location.href = 'chat.html';
 }
 
-// Отправка сообщения
+// Функция для отправки сообщений
 function sendMessage() {
     const message = document.getElementById('message').value;
     if (message) {
-        const currentUser = localStorage.getItem('nickname') || 'Гость'; // Берем ник из localStorage
+        const currentUser = localStorage.getItem('currentUser') || 'Гость'; // Берем текущего пользователя
         const avatar = localStorage.getItem('avatar') || 'default-avatar.png'; // Если аватар не установлен, дефолтный
         const messagesDiv = document.getElementById('messages');
 
-        // Создаем новый div для сообщения
         const messageDiv = document.createElement('div');
-        messageDiv.classList.add('message', 'user-message'); // Добавляем классы для стилизации
+        messageDiv.classList.add('message');
 
-        // Создаем элемент для аватара
         const avatarImg = document.createElement('img');
         avatarImg.src = avatar;
 
-        // Создаем элемент для текста сообщения
         const textDiv = document.createElement('div');
         textDiv.textContent = `${currentUser}: ${message}`;
 
-        // Вставляем аватар и текст в контейнер
         messageDiv.appendChild(avatarImg);
         messageDiv.appendChild(textDiv);
 
-        // Добавляем новое сообщение в контейнер
+        // Сохраняем сообщение в localStorage для текущего пользователя
+        saveMessage({ user: currentUser, message: message, avatar: avatar });
+
         messagesDiv.appendChild(messageDiv);
-
-        // Сохраняем сообщение в localStorage
-        saveMessages({ user: currentUser, message });
-
-        // Очищаем поле ввода
         document.getElementById('message').value = '';
     }
 }
 
-// Сохранение сообщений в localStorage
-function saveMessages(message) {
-    const messages = JSON.parse(localStorage.getItem('messages')) || [];
-    messages.push(message);
-    localStorage.setItem('messages', JSON.stringify(messages)); // Сохраняем сообщения в localStorage
+// Сохранение сообщений в localStorage для каждого пользователя
+function saveMessage(message) {
+    const currentUser = localStorage.getItem('currentUser');
+    if (!currentUser) return;
+
+    const userMessages = JSON.parse(localStorage.getItem(currentUser + '_messages')) || [];
+    userMessages.push(message);
+    localStorage.setItem(currentUser + '_messages', JSON.stringify(userMessages)); // Сохраняем сообщения для этого пользователя
 }
 
-// Загружать историю сообщений при загрузке чата
+// Загрузка сообщений для текущего пользователя
 function loadMessages() {
-    const messagesDiv = document.getElementById('messages');
-    const messages = JSON.parse(localStorage.getItem('messages')) || [];
+    const currentUser = localStorage.getItem('currentUser');
+    if (!currentUser) return;
 
-    // Отображаем каждое сообщение
+    const messages = JSON.parse(localStorage.getItem(currentUser + '_messages')) || [];
+    const messagesDiv = document.getElementById('messages');
+
     messages.forEach(msg => {
         const messageDiv = document.createElement('div');
-        messageDiv.classList.add('message', msg.user === getCurrentUser() ? 'user-message' : 'other-message');
+        messageDiv.classList.add('message');
 
-        // Создаем элемент для аватара
         const avatarImg = document.createElement('img');
-        const avatar = localStorage.getItem('avatar');
-        avatarImg.src = avatar ? avatar : 'default-avatar.png'; // Если аватар не установлен, показываем дефолтный
+        avatarImg.src = msg.avatar;
 
-        // Создаем элемент для текста сообщения
         const textDiv = document.createElement('div');
         textDiv.textContent = `${msg.user}: ${msg.message}`;
 
-        // Вставляем аватар и текст в контейнер
         messageDiv.appendChild(avatarImg);
         messageDiv.appendChild(textDiv);
 
-        // Добавляем сообщение в чат
         messagesDiv.appendChild(messageDiv);
     });
 }
 
-// Получаем текущего пользователя
-function getCurrentUser() {
-    return localStorage.getItem('nickname') || 'Гость';
-}
-
 // Загружаем сообщения при загрузке страницы
 document.addEventListener('DOMContentLoaded', loadMessages);
-
-// Открытие модального окна настроек
-function openSettings() {
-    // Заполняем поля настройками пользователя, если они сохранены в localStorage
-    const nickname = localStorage.getItem('nickname') || '';
-    const avatar = localStorage.getItem('avatar') || '';
-    const description = localStorage.getItem('description') || '';
-
-    document.getElementById('nickname').value = nickname;
-    document.getElementById('avatar').value = avatar;
-    document.getElementById('description').value = description;
-
-    // Показываем модальное окно
-    document.getElementById('settingsModal').style.display = 'block';
-}
-
-// Закрытие модального окна
-function closeSettings() {
-    document.getElementById('settingsModal').style.display = 'none';
-}
-
-// Сохранение настроек в localStorage
-function saveSettings() {
-    const nickname = document.getElementById('nickname').value;
-    const avatar = document.getElementById('avatar').value;
-    const description = document.getElementById('description').value;
-
-    // Сохраняем настройки
-    localStorage.setItem('nickname', nickname);
-    localStorage.setItem('avatar', avatar);
-    localStorage.setItem('description', description);
-
-    // Закрываем модальное окно
-    closeSettings();
-}
