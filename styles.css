@@ -1,260 +1,113 @@
-/* Общие стили для всех страниц */
-body {
-    font-family: 'Roboto', sans-serif;
+/* Общие стили */
+* {
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #f2f7ff, #d1e4fd); /* Плавный градиент */
-    background-size: cover;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2); /* Градиентный фон */
+    font-size: 16px;
+    color: #333;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    transition: background-color 0.3s ease-in-out;
 }
 
-/* Контейнер */
 .container {
-    width: 100%;
-    max-width: 450px; /* Немного уменьшил ширину */
-    background-color: #ffffff; /* Белый фон для элементов */
-    border-radius: 30px; /* Мягкие углы */
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.1);
-    padding: 30px; /* Уменьшил отступы */
-    transition: box-shadow 0.3s ease;
-    animation: fadeIn 0.7s ease-out;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    padding: 20px;
+    text-align: center;
 }
 
-.container:hover {
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2); /* Эффект на контейнер */
+h2 {
+    font-size: 24px;
+    color: #4A90E2;
+    margin-bottom: 20px;
 }
 
-/* Кнопки */
-button {
-    width: 100%;
-    padding: 15px; /* Уменьшил внутренний отступ */
-    border: none;
-    border-radius: 30px; /* Мягкие углы */
-    background-color: #3498db; /* Голубой цвет */
-    color: #fff;
-    font-size: 16px; /* Уменьшил размер шрифта */
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s;
-    margin-top: 15px; /* Уменьшил отступ между кнопками */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-button:hover {
-    background-color: #2980b9; /* Темно-голубой при наведении */
-    transform: scale(1.05); /* Эффект увеличения при наведении */
-}
-
-button:active {
-    transform: scale(0.98); /* Эффект уменьшения при нажатии */
-}
-
-/* Поля ввода */
 input, textarea {
     width: 100%;
-    padding: 14px; /* Уменьшил внутренний отступ */
-    margin-top: 15px; /* Уменьшил отступы */
-    border-radius: 30px; /* Мягкие углы */
-    border: 1px solid #e0e0e0; /* Легкая граница */
-    background-color: #f4f7fb; /* Светлый фон */
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
     font-size: 16px;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+    transition: border-color 0.3s ease;
 }
 
 input:focus, textarea:focus {
+    border-color: #4A90E2;
     outline: none;
-    border-color: #3498db; /* Голубая граница при фокусе */
-    background-color: #ffffff; /* Белый фон при фокусе */
-}
-
-/* Заголовки */
-h2 {
-    text-align: center;
-    color: #333333;
-    font-size: 24px; /* Уменьшил размер заголовка */
-    margin-bottom: 20px; /* Уменьшил отступ снизу */
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-
-/* Контейнеры для страниц */
-.auth-container, .profile-container, .chat-container {
-    text-align: center;
-}
-
-/* Для чата */
-.chat-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    padding: 20px; /* Уменьшил отступы */
-}
-
-#messages {
-    flex-grow: 1;
-    overflow-y: auto;
-    margin-bottom: 15px; /* Уменьшил отступ снизу */
-    padding: 15px;
-    border-radius: 30px;
-    background-color: #e6f1ff; /* Светлый голубой */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.message-input {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px; /* Уменьшил отступы */
-    background-color: #ffffff;
-    border-radius: 30px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-}
-
-#message {
-    width: 80%;
-    padding: 12px; /* Уменьшил внутренний отступ */
-    border-radius: 30px;
-    border: 1px solid #e0e0e0;
-    background-color: #f4f7fb;
-    font-size: 14px; /* Уменьшил размер шрифта */
-    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.05);
-}
-
-button.send {
-    width: 15%;
-    padding: 12px; /* Уменьшил внутренний отступ */
-    background-color: #3498db;
-    color: white;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 18px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
-}
-
-button.send:hover {
-    background-color: #2980b9; /* Темно-голубой при наведении */
-}
-
-/* Плавное появление */
-@keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-}
-
-/* Кнопка для перехода */
-button.secondary {
-    background-color: #f39c12;
-}
-
-button.secondary:hover {
-    background-color: #e67e22;
-}
-
-/* Заголовок профиля */
-.profile-container h3 {
-    font-size: 24px; /* Уменьшил размер заголовка */
-    color: #333333;
-    margin-top: 20px; /* Уменьшил отступ сверху */
-    font-weight: 600;
-}
-
-/* Изображение профиля */
-.profile-container img {
-    border-radius: 50%;
-    width: 100px; /* Уменьшил размер */
-    height: 100px; /* Уменьшил размер */
-    margin-top: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-/* Профиль */
-.profile-container input[type="file"] {
-    margin-top: 15px; /* Уменьшил отступ */
-    padding: 10px; /* Уменьшил отступ */
-    border-radius: 30px;
-    background-color: #f4f7fb;
-    border: 1px solid #e0e0e0;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-/* Для текста в профиле */
-.profile-container textarea {
-    resize: none;
-    background-color: #f4f7fb;
-    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.05);
-}
-
-/* Простой эффект для сообщений */
-.message {
-    padding: 10px 15px; /* Уменьшил отступы */
-    border-radius: 30px;
-    background-color: #ffffff;
-    margin-bottom: 10px; /* Уменьшил отступ */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-size: 14px; /* Уменьшил размер шрифта */
-}
-
-.message.user-message {
-    background-color: #3498db;
-    color: white;
-    text-align: right;
-}
-
-.message.other-message {
-    background-color: #f0f0f0;
-    color: #333;
-    text-align: left;
-}
-/* Стиль для модального окна */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.4);
-    padding-top: 60px;
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: 5% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 400px;
-}
-
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-/* Стиль для кнопок и поля ввода */
-textarea, input {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
 }
 
 button {
-    padding: 10px 20px;
-    margin-top: 10px;
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: none;
+    background-color: #4A90E2;
+    color: white;
+    font-size: 16px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #357ABD;
+}
+
+button:disabled {
+    background-color: #A1C4E3;
+    cursor: not-allowed;
+}
+
+/* Стиль для сообщений в чате */
+.messages-container {
+    width: 90%;
+    height: 400px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.message {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #F2F2F2;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.message img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.message div {
+    font-size: 14px;
+    color: #333;
+}
+
+/* Анимации */
+.fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
